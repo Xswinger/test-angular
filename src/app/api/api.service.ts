@@ -13,6 +13,7 @@ export class ApiService {
 
     constructor(private http: HttpClient) {}
 
+    //! Without this header all requests a failed with cosr error
     private getHeaders() {
         return new HttpHeaders({ 'Accept': '*/*' , 'Content-Type': 'text/plain'});
     }
