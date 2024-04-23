@@ -1,9 +1,18 @@
-<div class="card">
-    <div class="small-header">
-        <span>Other OS</span>
-    </div>
-    <div class="content">
-        asdasd
-        <button>Запустить</button>
-    </div>
-</div>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{data.name}}</mat-card-title>
+        <mat-card-subtitle>{{data.vCPU}}, {{data.RAM}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="./../../../assets/os_stub.png" height="50%" alt="Нет изображения">
+    <mat-card-content>
+        <span>Состояние: {{getVmState(data)}}</span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button *ngIf="getVmState(data) === 'Остановлен'" (click)="start(data.id)">Запустить</button>
+        <button mat-button *ngIf="getVmState(data) === 'Запущен'" (click)="stop(data.id)">Остановить</button>
+        <button mat-button *ngIf="getVmState(data) === 'Запущен'" (click)="stopForce(data.id)">Остановить (Force)</button>
+        <button mat-button *ngIf="getVmState(data) === 'Запущен'" (click)="pause(data.id)">Приостановить</button>
+        <button mat-button *ngIf="getVmState(data) === 'Приостановлен'" (click)="resume(data.id)">Возобновить</button>
+        <button mat-button style="color: red;" (click)="delete(data.id)">Удалить</button>
+    </mat-card-actions>
+</mat-card>

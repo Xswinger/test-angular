@@ -1,20 +1,27 @@
+mat-card {
+    width: 20vw;
+    height: 38vh;
+}
+
 .card {
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: 1px solid black;
-    flex-basis: 100%;
+    border: 0px solid black;
+    width: 22vw;
+    height: 38vh;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .small-header {
     display: flex;
+    width: fit-content;
     justify-content: flex-end;
-    background-color: rgb(203, 203, 203);
+    background-color: rgb(226, 226, 226);
 }
 
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center
+    align-items: center;
 }

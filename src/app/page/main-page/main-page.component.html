@@ -1,73 +1,85 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-        <span>Виртуализация</span>
-        <span class="example-spacer"></span>
-        <button mat-icon-button><mat-icon>home</mat-icon></button>
-        <button mat-icon-button><mat-icon>account_circle</mat-icon></button>
-        <button mat-icon-button><mat-icon>settings</mat-icon></button>
-        <button mat-icon-button><mat-icon>restore</mat-icon></button>
-    </mat-toolbar-row>
-</mat-toolbar>
-<div class="filter-bar">
-    <div style="display: flex">
-        <div style="padding: 5px; border-right: 1px solid black">
-            <select>
-                <option selected>Имя</option>
-                <option>ОС</option>
-                <option>c</option>
-            </select>
-            <input/>
+<mat-drawer-container autosize style="height: 100%;">
+    <mat-drawer #drawer>
+        <form [formGroup]="newVm" (ngSubmit)="createVm()" class="vm-form">
+            <h2>Создать ВМ</h2>
+            <mat-form-field appearance="outline">
+                <mat-label>Имя</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>vCPU</mat-label>
+                <input matInput formControlName="vCPU">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>RAM</mat-label>
+                <input matInput formControlName="RAM">
+            </mat-form-field>
+            <button mat-flat-button type="submit"
+            [disabled]="getFormProperty('name')
+                        || getFormProperty('vCPU')
+                        || getFormProperty('RAM')"
+            >Создать</button>
+        </form>
+    </mat-drawer>
+
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <mat-icon>view_agenda</mat-icon>
+            <span>Виртуализация</span>
+            <span class="spacer"></span>
+            <button mat-icon-button><mat-icon>home</mat-icon></button>
+            <button mat-icon-button><mat-icon>account_circle</mat-icon></button>
+            <button mat-icon-button><mat-icon>settings</mat-icon></button>
+            <button mat-icon-button (click)="getVms()"><mat-icon>restore</mat-icon></button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <h2 class="info-bar">Виртуальные машины</h2>
+    <div class="filter-bar">
+        <div style="display: flex">
+            <div class="form-wrapper">
+                <form>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Фильтр</mat-label>
+                        <mat-select>
+                            <mat-option>Имя</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field  appearance="outline">
+                        <mat-label>Фильтр по </mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="form-wrapper">
+                <mat-form-field appearance="outline">
+                    <mat-label>Фильтр</mat-label>
+                    <mat-select>
+                        <mat-option>Имя</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
-        <div style="padding: 5px; border-right: 1px solid black">
-            <select>
-                <option selected>Имя</option>
-                <option>ОС</option>
-                <option>c</option>
-            </select>
-        </div>
+        <button mat-flat-button (click)="drawer.toggle()">Создать ВМ</button>
     </div>
-    <button class="create-button">Создать ВМ</button>
-</div>
-<div class="info-bar">
-    21 результат
-</div>
-<div>
-    <mat-grid-list cols="4" rowHeight="2:1" style="background-color: rgb(240, 240, 240);">
-        <mat-grid-tile>
-            <app-card></app-card>
-        </mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-        <mat-grid-tile><app-card></app-card></mat-grid-tile>
-    </mat-grid-list>
-</div>
+    <div class="info-bar">
+        {{this.vms.length}} результатов
+    </div>
+    <div class="spinner_wrapper">
+        <div *ngIf="this.getLoadingState">
+            <mat-spinner></mat-spinner>
+        </div>
+        <mat-grid-list *ngIf="!this.getLoadingState" cols="4" rowHeight="1:1">
+            <mat-grid-tile *ngFor="let vm of this.vms">
+                <app-card 
+                    (onDelete)="removeVm($event)" 
+                    (onStart)="startVm($event)" 
+                    (onStop)="stopVm($event, false)" 
+                    (onStopForce)="stopVm($event, {force: true})"
+                    (onPause)="pauseVm($event)"
+                    (onResume)="resumeVm($event)"
+                    [data]="vm"
+                ></app-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</mat-drawer-container>
