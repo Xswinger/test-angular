@@ -7,17 +7,22 @@
                 <input matInput formControlName="name">
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>vCPU</mat-label>
-                <input matInput formControlName="vCPU">
+                <mat-label>Виртуальные ядра</mat-label>
+                <input matInput type="number" min="1" max="32" pattern="^\d+$" formControlName="vCPU">
+                <mat-hint>От 1 до 32</mat-hint>
+                <mat-error>Недопустимое значение</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>RAM</mat-label>
-                <input matInput formControlName="RAM">
+                <mat-label>Оперативная память (RAM)</mat-label>
+                <input matInput style="width: 90%;" min="1" max="64" pattern="^\d+$" type="number" formControlName="RAM">
+                <span matTextSuffix>Гб</span>
+                <mat-hint>От 1 до 64</mat-hint>
+                <mat-error>Недопустимое значение</mat-error>
             </mat-form-field>
             <button mat-flat-button type="submit"
-            [disabled]="getFormProperty('name')
-                        || getFormProperty('vCPU')
-                        || getFormProperty('RAM')"
+            [disabled]="getFormProperty('name')?.invalid
+                        || getFormProperty('vCPU')?.invalid
+                        || getFormProperty('RAM')?.invalid"
             >Создать</button>
         </form>
     </mat-drawer>

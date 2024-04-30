@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Vm } from './main-page-entity';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-page',
@@ -16,6 +16,8 @@ export class MainPageComponent implements OnInit {
 
   private loadingState: boolean = true;
 
+  // private readonly ramUnits: String[] = ["Гб", "Мб"];
+
   get getLoadingState() {
     return this.loadingState;
   }
@@ -28,7 +30,7 @@ export class MainPageComponent implements OnInit {
     this.newVm = formBuilder.group({
       name: [null, [Validators.required]],
       vCPU: [null, [Validators.required]],
-      RAM: [null, [Validators.required]]
+      RAM: [null, [Validators.min(1), Validators.max(64), Validators.required]]
     })
   }
 
@@ -36,9 +38,18 @@ export class MainPageComponent implements OnInit {
     this.getVms().then(() => {this.setLoadingState = false});
   }
 
-  public getFormProperty(name: string): boolean | undefined {
-    return this.newVm.get(name)?.invalid;
+  public getFormProperty(name: string): AbstractControl<any, any> | null {
+    return this.newVm.get(name);
   }
+
+  // getUnit() {
+  //   switch (true) {
+  //     case (this.getFormProperty('RAM')?.value > 64):
+  //       return this.ramUnits[1];
+  //     default:
+  //       return this.ramUnits[0];
+  //   }
+  // }
 
   public async getVms() {
     this.api.getVms().subscribe(
