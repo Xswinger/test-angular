@@ -45,6 +45,8 @@ h2 .info-bar {
 .spinner_wrapper div {
     display: flex; 
     justify-content: center; 
+    flex-direction: column;
+    align-items: center;
     margin-top: 10%;
 }
 .form-wrapper {

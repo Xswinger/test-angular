@@ -32,10 +32,18 @@
             <mat-icon>view_agenda</mat-icon>
             <span>Виртуализация</span>
             <span class="spacer"></span>
-            <button mat-icon-button><mat-icon>home</mat-icon></button>
-            <button mat-icon-button><mat-icon>account_circle</mat-icon></button>
-            <button mat-icon-button><mat-icon>settings</mat-icon></button>
-            <button mat-icon-button (click)="getVms()"><mat-icon>restore</mat-icon></button>
+            <button mat-icon-button>
+                <mat-icon>home</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>account_circle</mat-icon>
+            </button>
+            <button mat-icon-button>
+                <mat-icon>settings</mat-icon>
+            </button>
+            <button mat-icon-button title="Обновить" (click)="getVms()">
+                <mat-icon>restore</mat-icon>
+            </button>
         </mat-toolbar-row>
     </mat-toolbar>
     <h2 class="info-bar">Виртуальные машины</h2>
@@ -72,6 +80,7 @@
     <div class="spinner_wrapper">
         <div *ngIf="this.getLoadingState">
             <mat-spinner></mat-spinner>
+            <h3>{{loadingStateTitle}}</h3>
         </div>
         <mat-grid-list *ngIf="!this.getLoadingState" cols="4" rowHeight="1:1">
             <mat-grid-tile *ngFor="let vm of this.vms">

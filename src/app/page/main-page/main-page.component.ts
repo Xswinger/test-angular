@@ -14,9 +14,14 @@ export class MainPageComponent implements OnInit {
 
   newVm!: FormGroup;
 
+  //TODO change loading message and status logic
   private loadingState: boolean = true;
 
-  // private readonly ramUnits: String[] = ["Гб", "Мб"];
+  readonly loadingStateTitles: String[] = [
+    'Загрузка', 'Ошибка, повторная попытка получения'
+  ];
+
+  loadingStateTitle: String = this.loadingStateTitles[0];
 
   get getLoadingState() {
     return this.loadingState;
@@ -35,28 +40,30 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getVms().then(() => {this.setLoadingState = false});
+    this.getVms().then(() => {
+      this.setLoadingState = false;
+    }).catch(() => {
+      this.loadingStateTitle = this.loadingStateTitles[1];
+      setTimeout(() => this.ngOnInit(), 3000);
+    });
   }
 
   public getFormProperty(name: string): AbstractControl<any, any> | null {
     return this.newVm.get(name);
   }
 
-  // getUnit() {
-  //   switch (true) {
-  //     case (this.getFormProperty('RAM')?.value > 64):
-  //       return this.ramUnits[1];
-  //     default:
-  //       return this.ramUnits[0];
-  //   }
-  // }
-
-  public async getVms() {
-    this.api.getVms().subscribe(
-      (data: any) => {
-        this.vms = data['vms'];
-      }
-    )
+  public async getVms(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.api.getVms().subscribe(
+        (data: any) => {
+          this.vms = data['vms'];
+          return resolve();
+        }, error => {
+          console.log(error);
+          return reject();
+        }
+      )
+    });
   }
 
   public getVm(id: Number) {
