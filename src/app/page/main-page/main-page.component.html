@@ -1,20 +1,25 @@
 <mat-drawer-container autosize style="height: 100%;">
     <mat-drawer #drawer>
-        <form [formGroup]="newVm" (ngSubmit)="createVm()" class="vm-form">
-            <h2>Создать ВМ</h2>
+        <form [formGroup]="newVm" (ngSubmit)="createVm(drawer)" class="vm-form">
+            <div class="form-header">
+                <h2>Создать ВМ</h2>
+                <button mat-icon-button type="button" (click)="closeForm(drawer)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </div>
             <mat-form-field appearance="outline">
                 <mat-label>Имя</mat-label>
                 <input matInput formControlName="name">
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Виртуальные ядра</mat-label>
-                <input matInput type="number" min="1" max="32" pattern="^\d+$" formControlName="vCPU">
+                <input matInput type="number" min="1" max="32" pattern="^[1-9][0-9]*$" formControlName="vCPU">
                 <mat-hint>От 1 до 32</mat-hint>
                 <mat-error>Недопустимое значение</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Оперативная память (RAM)</mat-label>
-                <input matInput style="width: 90%;" min="1" max="64" pattern="^\d+$" type="number" formControlName="RAM">
+                <input matInput type="number" style="width: 90%;" min="1" max="64" pattern="^[1-9][0-9]*$" formControlName="RAM">
                 <span matTextSuffix>Гб</span>
                 <mat-hint>От 1 до 64</mat-hint>
                 <mat-error>Недопустимое значение</mat-error>
@@ -87,7 +92,7 @@
                 <app-card 
                     (onDelete)="removeVm($event)" 
                     (onStart)="startVm($event)" 
-                    (onStop)="stopVm($event, false)" 
+                    (onStop)="stopVm($event, {force: false})" 
                     (onStopForce)="stopVm($event, {force: true})"
                     (onPause)="pauseVm($event)"
                     (onResume)="resumeVm($event)"

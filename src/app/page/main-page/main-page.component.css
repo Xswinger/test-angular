@@ -4,9 +4,6 @@ mat-toolbar {
     background: linear-gradient(133deg, rgba(2,0,36,1) 3%, rgba(88,0,0,1) 6%, rgba(140,0,0,1) 10%, rgba(173,0,0,1) 12%, rgba(205,0,0,1) 14%, rgba(255,0,0,1) 16%, rgba(255,0,0,1) 19%, rgba(255,27,27,1) 22%, rgba(255,186,78,1) 26%, rgba(255,191,49,1) 29%, rgba(255,154,0,1) 32%, rgba(255,167,0,1) 35%, rgba(172,69,0,1) 38%, rgba(255,164,164,1) 44%, rgba(255,0,0,1) 49%, rgba(247,167,167,1) 53%, rgba(255,119,39,1) 56%, rgba(255,255,255,1) 61%, rgba(184,0,0,1) 76%, rgba(158,0,0,1) 86%, rgba(110,0,0,1) 95%, rgba(0,0,0,1) 100%);
     border-bottom: 1px solid rgb(156, 156, 156);
 }
-mat-grid-list {
-    background-color: rgb(240, 240, 240);
-}
 .vm-form {
     display: flex; 
     flex-direction: column; 
@@ -15,7 +12,7 @@ mat-grid-list {
 .spacer {
     flex: 1 1 auto;
 }
-button {
+button:not(:has(.mat-icon)) {
     background-color: brown; 
     color: white;
 }
@@ -56,4 +53,9 @@ h2 .info-bar {
 mat-drawer {
     width: 20%;
     min-width: min-content;
+}
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

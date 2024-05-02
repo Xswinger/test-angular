@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api/api.service';
 import { Vm } from './main-page-entity';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-main-page',
@@ -14,7 +15,6 @@ export class MainPageComponent implements OnInit {
 
   newVm!: FormGroup;
 
-  //TODO change loading message and status logic
   private loadingState: boolean = true;
 
   readonly loadingStateTitles: String[] = [
@@ -52,6 +52,11 @@ export class MainPageComponent implements OnInit {
     return this.newVm.get(name);
   }
 
+  public closeForm(drawer: MatDrawer): void {
+    drawer.toggle();
+    this.newVm.reset();
+  }
+
   public async getVms(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.api.getVms().subscribe(
@@ -66,7 +71,7 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  public getVm(id: Number) {
+  public getVm(id: Number): void {
     this.api.getVm(id).subscribe(
       (data: any) => {
         console.log(data);
@@ -77,10 +82,11 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public createVm() {
+  public createVm(drawer: MatDrawer): void {
     this.api.createVm(this.newVm.value).subscribe(
       (data: any) => {
         console.log(data);
+        this.closeForm(drawer);
         this.getVms();
       }, error => {
         console.log(error);
@@ -88,7 +94,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public removeVm(id: Number) {
+  public removeVm(id: Number): void {
     this.api.removeVm(id).subscribe(
       (data: any) => {
         console.log(data);
@@ -99,7 +105,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public startVm(id: Number) {
+  public startVm(id: Number): void {
     this.api.startVm(id).subscribe(
       (data: any) => {
         console.log(data);
@@ -110,7 +116,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public stopVm(id: Number, force: Object = {force: false}) {
+  public stopVm(id: Number, force: Object = {force: false, stub: "stub"}): void {
     this.api.stopVm(id, force).subscribe(
       (data: any) => {
         console.log(data);
@@ -121,7 +127,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public pauseVm(id: Number) {
+  public pauseVm(id: Number): void {
     this.api.pauseVm(id).subscribe(
       (data: any) => {
         console.log(data);
@@ -132,7 +138,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  public resumeVm(id: Number) {
+  public resumeVm(id: Number): void {
     this.api.resumeVm(id).subscribe(
       (data: any) => {
         console.log(data);
